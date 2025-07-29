@@ -145,6 +145,54 @@ async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
+@api_router.post("/contact", response_model=ContactFormResponse)
+async def submit_contact_form(form_data: ContactFormSubmission):
+    """Handle contact form submission and send email"""
+    try:
+        # Validate and sanitize input data
+        if not form_data.name.strip():
+            raise HTTPException(status_code=400, detail="Name is required")
+        if not form_data.requirements.strip():
+            raise HTTPException(status_code=400, detail="Requirements are required")
+        
+        # Store form submission in database
+        contact_record = {
+            "id": str(uuid.uuid4()),
+            "name": form_data.name.strip(),
+            "email": form_data.email,
+            "phone": form_data.phone.strip(),
+            "requirements": form_data.requirements.strip(),
+            "submitted_at": datetime.utcnow(),
+            "status": "new"
+        }
+        
+        await db.contact_submissions.insert_one(contact_record)
+        
+        # Send email notification
+        email_sent = await send_contact_email(form_data)
+        
+        if email_sent:
+            logger.info(f"Contact form submitted successfully by {form_data.email}")
+            return ContactFormResponse(
+                success=True,
+                message="Thank you! We will be in touch soon!"
+            )
+        else:
+            logger.warning(f"Email sending failed for submission by {form_data.email}")
+            return ContactFormResponse(
+                success=True,
+                message="Thank you! We received your message and will be in touch soon!"
+            )
+            
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        logger.error(f"Error processing contact form: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail="There was an error processing your request. Please try again later."
+        )
+
 # Include the router in the main app
 app.include_router(api_router)
 
