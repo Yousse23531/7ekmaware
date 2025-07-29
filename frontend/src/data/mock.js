@@ -1,4 +1,7 @@
-// Mock data for 7EKMAWARE services and contact form
+// Frontend API integration for 7EKMAWARE contact form
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 export const mockServices = [
   {
@@ -35,7 +38,7 @@ export const mockServices = [
       "Website UI/UX design",
       "Wireframing and prototyping",
       "Landing page design", 
-      "Responsive and mobile-first design",
+      "Mobile-first design",
       "Redesign of existing websites",
       "Figma/Adobe XD mockups"
     ]
@@ -68,17 +71,26 @@ export const mockServices = [
   }
 ];
 
-// Mock function to simulate contact form submission
+// Real API function to submit contact form
 export const submitContactForm = async (formData) => {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
-  // Log form data (in real app, this would be sent to backend)
-  console.log('Contact form submitted:', formData);
-  
-  // Simulate successful submission
-  return {
-    success: true,
-    message: 'Thank you! We will be in touch soon!'
-  };
+  try {
+    const response = await fetch(`${API}/contact`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.detail || 'Something went wrong');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Contact form submission error:', error);
+    throw error;
+  }
 };
