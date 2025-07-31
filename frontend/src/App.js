@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
         </Routes>
-        <Toaster />
       </BrowserRouter>
     </div>
   );
