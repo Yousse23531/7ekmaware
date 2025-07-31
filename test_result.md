@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the 7EKMAWARE website contact form functionality and UI interactions"
+user_problem_statement: "Convert the 7EKMAWARE full-stack website to a frontend-only static website by removing backend and contact form while preserving design and animations"
 
 frontend:
   - task: "Contact form submission with test data"
