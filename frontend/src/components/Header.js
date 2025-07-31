@@ -22,12 +22,6 @@ const Header = ({ activeSection, scrollToSection }) => {
         >
           Services
         </a>
-        <a 
-          className={`dark-nav-link ${activeSection === 'contact' ? 'active' : ''}`}
-          onClick={() => scrollToSection('contact')}
-        >
-          Contact
-        </a>
       </nav>
     </header>
   );
