@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import HeroSection from './HeroSection';
 import ServicesSection from './ServicesSection';
-import ContactSection from './ContactSection';
 import Footer from './Footer';
 
 const HomePage = () => {
@@ -10,7 +9,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'services', 'contact'];
+      const sections = ['home', 'services'];
       const scrollPosition = window.scrollY + 100;
 
       sections.forEach(section => {
@@ -43,7 +42,6 @@ const HomePage = () => {
       />
       <HeroSection />
       <ServicesSection />
-      <ContactSection />
       <Footer />
     </div>
   );
