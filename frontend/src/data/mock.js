@@ -1,7 +1,4 @@
-// Frontend API integration for 7EKMAWARE contact form
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Mock data for 7EKMAWARE static website
 
 export const mockServices = [
   {
@@ -70,27 +67,3 @@ export const mockServices = [
     ]
   }
 ];
-
-// Real API function to submit contact form
-export const submitContactForm = async (formData) => {
-  try {
-    const response = await fetch(`${API}/contact`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.detail || 'Something went wrong');
-    }
-
-    return data;
-  } catch (error) {
-    console.error('Contact form submission error:', error);
-    throw error;
-  }
-};
