@@ -21,12 +21,6 @@ const HeroSection = () => {
             >
               Explore Services
             </button>
-            <button 
-              className="btn-secondary"
-              onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
-            >
-              Get Started
-            </button>
           </div>
         </div>
       </div>
